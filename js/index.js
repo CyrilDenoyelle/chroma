@@ -1,102 +1,77 @@
 
 (()=>{
+
     const vh = window.innerHeight;
     const vw = window.innerWidth;
 
     // init controller
     var controller = new ScrollMagic.Controller({ globalSceneOptions: { triggerHook: 0.5 } });
 
-    const global_duration = 1;
-    const offset = p => (p * (1 + global_duration)) * vh
+    const globalPageDuration = 2;
+    const offset = page => (page * (1 + globalPageDuration)) * vh // calcul de l'offset d'une page par rappor a la "duree" (en pixels) de chaque scene
 
-    let pageIndex = 0;
+    const apply = (p) => {
+        p.forEach((page, i) => { // chaque page est constituee de plusieurs scenes
 
+            // toute les pages on une scene de setPin inclu, qui permet de rester devant la page le temps que toute les animations se jouent
+            new ScrollMagic.Scene({
+                offset: offset(i),
+                duration: globalPageDuration*vh
+            })
+            .setPin(`#page${i}`)
+            .addTo(controller);
+    
+            page.forEach(scnOpt => { // pour chaque option de scene de cette page
+                const scene = new ScrollMagic.Scene({ // on prepare une scene set a l'endroit de la page (qui commence en meme temps que la page s'arrete)
+                    offset: offset(i),
+                    duration: globalPageDuration*vh
+                });
+    
+                Object.keys(scnOpt) // on applique chaque option
+                    .forEach(option=>{
+                        scene[option](...scnOpt[option]);
+                    });
+    
+                scene.addTo(controller);
+            });
+        });
+    }
 
-	/////////////////////////// PAGE 1 ///////////////////////////
-	new ScrollMagic.Scene({
-        offset: offset(pageIndex),
-        duration: global_duration*vh
-    })
-    .setPin("#page1")
-    // .addIndicators()
-    .addTo(controller);
+    const pages = [
+        [
+            /// PAGE 0 ///
+            // le village en fond qui se dezoom
+            { setTween: [TweenMax.from('#background', { scale: 1.05, ease: Power2.easeInOut })] },
+            // contour qui s'ouvre pour laisser voir le village
+            { setTween: ['#parallax1', { scale: 1.45, ease: Power2.easeInOut }] }
+        ],
+        [
+            /// PAGE 1 ///
+            // test-plan3 (la montagne en fond) part en bas (y) et a gauche (x) de 2%
+            { setTween: ['#test-plan3', { x: '-2%', y: '2%', ease: Power2.easeInOut }] },
+            // test-plan2 (le personnage) a gauche (x) de 5%
+            { setTween: ['#test-plan2', { x: '-5%', ease: Power2.easeInOut }] },
+            // test-plan1 (le personnage) a droite (x) de 10%
+            { setTween: ['#test-plan1', { x: '10%', ease: Power2.easeInOut }] }
+        ],
+        [
+            /// PAGE 2 ///
+            // moulin-background grandi de 1 scale a 1.05 et de 2% a gauche
+            { setTween: [TweenMax.fromTo('#moulin-background', { scale: 1, ease: Power2.easeInOut }, { scale: 1.05, x: '-2%', ease: Power2.easeInOut })] },
+            // moulin-2plan (le moulin) grandi de 1 de scale a 1.05 et de 10% a gauche
+            { setTween: ['#moulin-2plan', { scale: 1.05, x: '-10%', ease: Power1.easeInOut }] },
+            // moulin-1plan (la cycliste) bouge de 15% a droite
+            { setTween: ['#moulin-1plan', { x: '15%', ease: Power1.easeInOut }] }
+        ],
+        [
+            /// PAGE 3 ///
+            // le village en fond qui se dezoom
+            { setTween: ['#parallax2', { scale: 1.45, ease: Power2.easeInOut }] },
+            // contour qui s'ouvre pour laisser voir le village
+            { setTween: [TweenMax.fromTo('#background2', { scale: 1.05, ease: Power2.easeInOut }, { scale: 1 })] }
+        ],
+    ];
 
-    // const tween1 = TweenMax.to("#parallax1", 5, { scale: 1.5, ease: Power2.easeIn });
-	new ScrollMagic.Scene({
-        offset: offset(pageIndex),
-        duration: global_duration*vh
-    })
-    .setTween("#parallax1", { scale: 1.5, ease: Power3.easeIn })
-    // .setTween(tween1)
-    // .tweenChanges(false)
-    .addTo(controller);
-
-	new ScrollMagic.Scene({
-        offset: offset(pageIndex),
-        duration: global_duration*vh
-    })
-    .setTween("#background", 2, { scale: .95 })
-    .addTo(controller);
-
-
-	/////////////////////////// PAGE 2 ///////////////////////////
-    pageIndex += 1;
-	new ScrollMagic.Scene({
-        offset: offset(pageIndex),
-        duration: global_duration*vh
-    })
-    .setPin("#page2")
-    .addIndicators()
-    .addTo(controller);
-
-	new ScrollMagic.Scene({
-        offset: offset(pageIndex),
-        // offset: offset(pageIndex)-.25*vh,
-        duration: global_duration*vh + .5*vh
-    })
-    .setTween("#plan3", { x: "-2%", y: "2%" })
-    .addIndicators()
-    .addTo(controller);
-
-	new ScrollMagic.Scene({
-        offset: offset(pageIndex),
-        // offset: offset(pageIndex)-.25*vh,
-        duration: global_duration*vh + .5*vh
-    })
-    .setTween("#plan2", 2, { x: "-5%" })
-    .addTo(controller);
-
-	new ScrollMagic.Scene({
-        offset: offset(pageIndex),
-        // offset: offset(pageIndex)-.25*vh,
-        duration: global_duration*vh + .5*vh
-    })
-    .setTween("#plan1", 2, { x: "15%" })
-    .addTo(controller);
-
-
-	/////////////////////////// PAGE 3 ///////////////////////////
-    pageIndex += 1;
-	new ScrollMagic.Scene({
-        offset: offset(pageIndex),
-        duration: global_duration*vh
-    })
-    .setPin("#page3")
-    // .addIndicators()
-    .addTo(controller);
-
-	new ScrollMagic.Scene({
-        offset: offset(pageIndex),
-        duration: global_duration*vh
-    })
-    .setTween("#parallax2", 2, { scale: 1.5 })
-    .addTo(controller);
-
-	new ScrollMagic.Scene({
-        offset: offset(pageIndex),
-        duration: global_duration*vh
-    })
-    .setTween("#background2", 2, { scale: .95 })
-    .addTo(controller);
+    apply(pages);
 
 })()
