@@ -57,9 +57,9 @@
         [
             /// PAGE 2 ///
             // moulin-background grandi de 1 scale a 1.05 et de 2% a gauche
-            { setTween: [TweenMax.fromTo('#moulin-background', { scale: 1, ease: Power2.easeInOut }, { scale: 1.05, x: '-2%', ease: Power2.easeInOut })] },
+            { setTween: [TweenMax.to('#moulin-background', { scale: 1.05, x: '-3%', ease: Power2.easeInOut })] },
             // moulin-2plan (le moulin) grandi de 1 de scale a 1.05 et de 10% a gauche
-            { setTween: ['#moulin-2plan', { scale: 1.05, x: '-10%', ease: Power1.easeInOut }] },
+            { setTween: [TweenMax.fromTo('#moulin-2plan', { scale: 1, x: '-2%', ease: Power1.easeInOut }, { scale: 1.05, x: '-15%', ease: Power1.easeInOut })] },
             // moulin-1plan (la cycliste) bouge de 15% a droite
             { setTween: ['#moulin-1plan', { x: '15%', ease: Power1.easeInOut }] }
         ],
