@@ -1,6 +1,7 @@
 
 (() => {
 
+    gsap.registerPlugin(MotionPathPlugin);
 
     const vh = window.innerHeight;
     const vw = window.innerWidth;
@@ -69,7 +70,23 @@
             // le village en fond qui se dezoom
             { to: ['#parallax2', { scale: 1.45, ease: Power2.easeInOut }] },
             // contour qui s'ouvre pour laisser voir le village
-            { fromTo: ['#background2', { scale: 1.05, ease: Power2.easeInOut }, { scale: 1 }] }
+            { fromTo: ['#background2', { scale: 1.05, ease: Power2.easeInOut }, { scale: 1 }] },
+
+            { 
+                to: ["#test-papillon", 
+                    {
+                        scale: 0,
+                        motionPath: {
+                            alignOrigin: [0.5, 0.5],
+                            curviness: 1,
+                            autoRotate: false,
+                            align: "self",
+                            path: "M-6.74,164.645 C0.258,145.639 59.224,76.583 132.227,75.589 207.239,75.589 228.086,128.706 254.086,156.716 287.084,190.71 320.015,202.904 369.015,202.904 456.015,202.904 490.244,154.113 497.244,131.118 "
+                        }
+                    }
+                ]
+            }
+
         ],
     ];
 
