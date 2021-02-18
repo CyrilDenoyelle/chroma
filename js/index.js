@@ -1,4 +1,32 @@
 
+var htmlPages = Array.from(document.getElementsByClassName("page"));
+
+htmlPages.pop();
+
+htmlPages.forEach((page, i) => {
+
+    const button = document.createElement('button');
+
+    button.setAttribute('index', i + 1);
+
+    button.textContent = 'QUELIQUE';
+    button.style.zIndex = 10;
+    button.style.position = 'absolute';
+    button.style.top = '90%';
+    button.style.left = '50%';
+    button.style.transform = 'translate(-50%, -50%)';
+    button.onclick = nextPage;
+
+    page.append(button);
+})
+
+function nextPage() {
+    const index = this.getAttribute('index');
+    document.getElementById(`page${index}`).scrollIntoView({ 
+        behavior: 'smooth' 
+    })
+}
+
 (() => {
 
     gsap.registerPlugin(MotionPathPlugin);
