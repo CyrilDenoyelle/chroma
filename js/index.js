@@ -42,7 +42,9 @@
             // le village en fond qui se dezoom
             { to: ['#parallax1', { scale: 1.45, ease: Power2.easeInOut }] },
             // contour qui s'ouvre pour laisser voir le village
-            { fromTo: ['#background', { scale: 1.05, ease: Power2.easeInOut }, { scale: 1 }] }
+            { fromTo: ['#background', { scale: 1.05, ease: Power2.easeInOut }, { scale: 1 }] },
+            // Le titre arrive d'en haut en fadeIn et en grossissant
+            { fromTo: ['#title', { opacity: 0 }, { scale: 10.45, y: `${vh / 2}`, ease: Power2.easeInOut, opacity: 1 }] },
         ],
         [
             /// PAGE 1 ///
