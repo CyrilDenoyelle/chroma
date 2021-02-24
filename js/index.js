@@ -116,6 +116,13 @@ function nextPage() {
             }
 
         ],
+        [
+            /// PAGE 4 ///
+            ///Le petit nuage qui se deplace vers la droite
+            { to: ['#nuage-2plan', { x: '100%', ease: Power1.easeInOut }] },
+            ///Le grand nuage qui se deplace vers la droite
+            { to: ['#nuage-1plan', { x: '150%', ease: Power1.easeInOut }] }
+        ],
     ];
 
     apply(pages);
