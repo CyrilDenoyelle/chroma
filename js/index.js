@@ -127,4 +127,30 @@ function nextPage() {
 
     apply(pages);
 
+    const pages = document.querySelectorAll('.page');
+
+    pages.forEach( (p, i) => {
+        const subtitles = [...p.childNodes].filter(el => el.className === 'subtitle');
+
+        const tl = gsap.timeline({
+            defaults: {
+                duration: globalPageDuration / subtitles.length
+            }
+        });
+
+        subtitles.forEach( (s, sIndex) => {
+            const delay = sIndex === 0 ? `+=${globalPageDuration / 4}` : null;
+            tl.from(s, { opacity: 0, ease: Power4.easeOut }, delay );
+            tl.to(s, { opacity: 0, ease: Power4.easeIn });
+        });
+
+        ScrollTrigger.create({
+            animation: tl,
+            trigger: `#page${i}`,
+            start: 'top top',
+            scrub: .5,
+            end: () => `+=${globalPageDuration * vh}`,
+        });
+    });
+
 })()
