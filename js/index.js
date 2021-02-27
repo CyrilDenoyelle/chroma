@@ -18,14 +18,14 @@ htmlPages.forEach((page, i) => {
     button.onclick = nextPage;
 
     page.append(button);
-})
+});
 
 function nextPage() {
     const index = this.getAttribute('index');
     document.getElementById(`page${index}`).scrollIntoView({ 
         behavior: 'smooth' 
-    })
-}
+    });
+};
 
 (() => {
 
@@ -49,7 +49,12 @@ function nextPage() {
             pageOptions.forEach(opt => { // pour chaque option de scene de cette page
                 Object.keys(opt) // on applique chaque option
                     .forEach(option => {
-                        tl[option](...opt[option], '<');
+                        try {
+                            tl[option](...opt[option], '<');
+                        } catch (error) {
+                            console.log(`%c"tl[${option}]" n'existe pas`, 'color: red');
+                            console.log(error);
+                        }
                     });
             });
 
@@ -61,9 +66,9 @@ function nextPage() {
                 scrub: .5,
                 end: () => `+=${globalPageDuration * vh}`,
                 markers: true
-            })
+            });
         });
-    }
+    };
 
     var pages = [
         [
@@ -99,7 +104,6 @@ function nextPage() {
             { to: ['#parallax2', { scale: 1.45, ease: Power2.easeInOut }] },
             // contour qui s'ouvre pour laisser voir le village
             { fromTo: ['#background2', { scale: 1.05, ease: Power2.easeInOut }, { scale: 1 }] },
-
             { 
                 to: ["#test-papillon", 
                     {
@@ -114,7 +118,6 @@ function nextPage() {
                     }
                 ]
             }
-
         ],
         [
             /// PAGE 4 ///
@@ -127,9 +130,9 @@ function nextPage() {
 
     apply(pages);
 
-    const pages = document.querySelectorAll('.page');
+    const subs = document.querySelectorAll('.page');
 
-    pages.forEach( (p, i) => {
+    subs.forEach( (p, i) => {
         const subtitles = [...p.childNodes].filter(el => el.className === 'subtitle');
 
         const tl = gsap.timeline({
@@ -138,7 +141,7 @@ function nextPage() {
             }
         });
 
-        subtitles.forEach( (s, sIndex) => {
+        subtitles.forEach((s, sIndex) => {
             const delay = sIndex === 0 ? `+=${globalPageDuration / 4}` : null;
             tl.from(s, { opacity: 0, ease: Power4.easeOut }, delay );
             tl.to(s, { opacity: 0, ease: Power4.easeIn });
