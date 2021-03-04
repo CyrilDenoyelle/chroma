@@ -24,58 +24,104 @@
     var pagesAnnimations = [
         [
             /// PAGE 0 ///
-            // le village en fond qui se dezoom
-            { to: ['#parallax1', { scale: 1.45, ease: Power2.easeInOut }] },
-            // contour qui s'ouvre pour laisser voir le village
-            { fromTo: ['#background', { scale: 1.05, ease: Power2.easeInOut }, { scale: 1 }] },
-            // Le titre arrive d'en haut en fadeIn et en grossissant
-            { fromTo: ['#title', { opacity: 0 }, { scale: 10.45, y: `${vh / 2}`, ease: Power2.easeInOut, opacity: 1 }] },
+            {
+                timeLineStr: '<',
+                animations: [
+                    // le village en fond qui se dezoom
+                    { f: 'to', options: ['#parallax1', { scale: 1.45, ease: Power2.easeInOut }] },
+                    // contour qui s'ouvre pour laisser voir le village
+                    { f: 'fromTo', options: ['#background', { scale: 1.05, ease: Power2.easeInOut }, { scale: 1 }] },
+                    // Le titre arrive d'en haut en fadeIn et en grossissant
+                    { f: 'fromTo', options: ['#title', { opacity: 0 }, { scale: 10.45, y: `${vh / 2}`, ease: Power2.easeInOut, opacity: 1 }] },
+                ]
+            }
         ],
         [
-            /// PAGE 1 ///
-            // test-plan3 (la montagne en fond) part en bas (y) et a gauche (x) de 2%
-            { to: ['#test-plan3', { x: '-2%', y: '2%', ease: Power2.easeInOut }] },
-            // test-plan2 (le personnage) a gauche (x) de 5%
-            { to: ['#test-plan2', { x: '-5%', ease: Power2.easeInOut }] },
-            // test-plan1 (le personnage) a droite (x) de 10%
-            { to: ['#test-plan1', { x: '10%', ease: Power2.easeInOut }] }
+            {
+                timeLineStr: '<',
+                animations: [
+                    // test-plan3 (la montagne en fond) part en bas (y) et a gauche (x) de 2%
+                    { f: 'to', options: ['#test-plan3', { x: '-2%', y: '2%', ease: Power2.easeInOut }] },
+                    // test-plan2 (le personnage) a gauche (x) de 5%
+                    { f: 'to', options: ['#test-plan2', { x: '-5%', ease: Power2.easeInOut }] },
+                    // test-plan1 (le personnage) a droite (x) de 10%
+                    { f: 'to', options: ['#test-plan1', { x: '10%', ease: Power2.easeInOut }] },
+                ]
+            }
         ],
         [
             /// PAGE 2 ///
-            // moulin-background grandi de 1 scale a 1.05 et de 2% a gauche
-            { to: ['#moulin-background', { scale: 1.05, x: '-3%', ease: Power2.easeInOut }] },
-            // moulin-2plan (le moulin) grandi de 1 de scale a 1.05 et de 10% a gauche
-            { fromTo: ['#moulin-2plan', { scale: 1, x: '-2%', ease: Power1.easeInOut }, { scale: 1.05, x: '-15%', ease: Power1.easeInOut }] },
-            // moulin-1plan (la cycliste) bouge de 15% a droite
-            { to: ['#moulin-1plan', { x: '15%', ease: Power1.easeInOut }] }
+            {
+                timeLineStr: 's-e--',
+                animations: [
+                    // moulin-background grandi de 1 scale a 1.05 et de 2% a gauche
+                    { f: 'to', options: ['#moulin-background1', { scale: 1.05, x: '-3%', ease: Power2.easeInOut }] },
+                    // moulin-2plan (le moulin) grandi de 1 de scale a 1.05 et de 10% a gauche
+                    { f: 'fromTo', options: ['#moulin-2plan1', { scale: 1, x: '-2%', ease: Power1.easeInOut }, { scale: 1.05, x: '-15%', ease: Power1.easeInOut }] },
+                    // moulin-1plan (la cycliste) bouge de 15% a droite
+                    { f: 'to', options: ['#moulin-1plan1', { x: '15%', ease: Power1.easeInOut }] },
+                ]
+            },
+            {
+                timeLineStr: '-s-e-',
+                animations: [
+                    // moulin-background grandi de 1 scale a 1.05 et de 2% a gauche
+                    { f: 'to', options: ['#moulin-background2', { scale: 1.05, x: '-3%', ease: Power2.easeInOut }] },
+                    // moulin-2plan (le moulin) grandi de 1 de scale a 1.05 et de 10% a gauche
+                    { f: 'fromTo', options: ['#moulin-2plan2', { scale: 1, x: '-2%', ease: Power1.easeInOut }, { scale: 1.05, x: '-15%', ease: Power1.easeInOut }] },
+                    // moulin-1plan (la cycliste) bouge de 15% a droite
+                    { f: 'to', options: ['#moulin-1plan2', { x: '15%', ease: Power1.easeInOut }] },
+                ]
+            },
+            {
+                timeLineStr: '--s-e',
+                animations: [
+                    // moulin-background grandi de 1 scale a 1.05 et de 2% a gauche
+                    { f: 'to', options: ['#moulin-background3', { scale: 1.05, x: '-3%', ease: Power2.easeInOut }] },
+                    // moulin-2plan (le moulin) grandi de 1 de scale a 1.05 et de 10% a gauche
+                    { f: 'fromTo', options: ['#moulin-2plan3', { scale: 1, x: '-2%', ease: Power1.easeInOut }, { scale: 1.05, x: '-15%', ease: Power1.easeInOut }] },
+                    // moulin-1plan (la cycliste) bouge de 15% a droite
+                    { f: 'to', options: ['#moulin-1plan3', { x: '15%', ease: Power1.easeInOut }] },
+                ]
+            }
         ],
         [
             /// PAGE 3 ///
-            // le village en fond qui se dezoom
-            { to: ['#parallax2', { scale: 1.45, ease: Power2.easeInOut }] },
-            // contour qui s'ouvre pour laisser voir le village
-            { fromTo: ['#background2', { scale: 1.05, ease: Power2.easeInOut }, { scale: 1 }] },
-            { 
-                to: ["#test-papillon", 
-                    {
-                        scale: 0,
-                        motionPath: {
-                            alignOrigin: [0.5, 0.5],
-                            curviness: 1,
-                            autoRotate: false,
-                            align: "self",
-                            path: "M-6.74,164.645 C0.258,145.639 59.224,76.583 132.227,75.589 207.239,75.589 228.086,128.706 254.086,156.716 287.084,190.71 320.015,202.904 369.015,202.904 456.015,202.904 490.244,154.113 497.244,131.118 "
+            {
+                timeLineStr: '<',
+                animations: [
+                    // le village en fond qui se dezoom
+                    { f: 'to', options: ['#parallax2', { scale: 1.45, ease: Power2.easeInOut }] },
+                    // contour qui s'ouvre pour laisser voir le village
+                    { f: 'fromTo', options: ['#background2', { scale: 1.05, ease: Power2.easeInOut }, { scale: 1 }] },
+                    // le papillon suis un path en csv
+                    { f: 'to', options: [
+                        "#test-papillon", 
+                        {
+                            scale: 0,
+                            motionPath: {
+                                alignOrigin: [0.5, 0.5],
+                                curviness: 1,
+                                autoRotate: false,
+                                align: "self",
+                                path: "M-6.74,164.645 C0.258,145.639 59.224,76.583 132.227,75.589 207.239,75.589 228.086,128.706 254.086,156.716 287.084,190.71 320.015,202.904 369.015,202.904 456.015,202.904 490.244,154.113 497.244,131.118 "
+                            }
                         }
-                    }
+                    ]},
                 ]
             }
         ],
         [
             /// PAGE 4 ///
-            ///Le petit nuage qui se deplace vers la droite
-            { to: ['#nuage-2plan', { x: '100%', ease: Power1.easeInOut }] },
-            ///Le grand nuage qui se deplace vers la droite
-            { to: ['#nuage-1plan', { x: '150%', ease: Power1.easeInOut }] }
+            {
+                timeLineStr: '<',
+                animations: [
+                    ///Le petit nuage qui se deplace vers la droite
+                    { f: 'to', options: ['#nuage-2plan', { x: '100%', ease: Power1.easeInOut }] },
+                    ///Le grand nuage qui se deplace vers la droite
+                    { f: 'to', options: ['#nuage-1plan', { x: '150%', ease: Power1.easeInOut }] },
+                ]
+            }
         ],
     ];
 
@@ -112,17 +158,24 @@
 
         // ANIMATIONS
         // chaque page est constituee d'un timeline
-        const animationTl = gsap.timeline({
-            defaults: {
-                duration: globalPageDuration * (subtitles.length ? subtitles.length : 1)
-            }
-        });
+        const totalTimeLineDuration = globalPageDuration * (subtitles.length ? subtitles.length : 1)
+        const animationTl = gsap.timeline();
 
-        pagesAnnimations[i].forEach(opt => { // pour chaque option de scene de cette page
-            Object.keys(opt) // on applique chaque option
-            .forEach(option => {
+        pagesAnnimations[i].forEach(({ timeLineStr, animations }) => { // pour chaque option de scene de cette page
+
+            const [delay, duration] = timeLineStr === '<' || timeLineStr === '>'
+            ? [timeLineStr]
+            : timeLineStr.split(/s|e/g)
+                .map(proportion => totalTimeLineDuration * (proportion.length / (timeLineStr.length - 2)));
+
+            animations.forEach(({ f, options }) => {
+                options[1] = {
+                    ...options[1],
+                    ...duration && { duration }
+                }
+
                 try {
-                    animationTl[option](...opt[option], '<');
+                    animationTl[f](...options, delay);
                 } catch (error) {
                     console.log(`%c"animationTl[${option}]" n'existe pas`, 'color: red');
                 }
