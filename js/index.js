@@ -1,76 +1,27 @@
 
-var htmlPages = Array.from(document.getElementsByClassName("page"));
-
-htmlPages.pop();
-
-htmlPages.forEach((page, i) => {
-
-    const button = document.createElement('button');
-
-    button.setAttribute('index', i + 1);
-
-    button.textContent = 'QUELIQUE';
-    button.style.zIndex = 10;
-    button.style.position = 'absolute';
-    button.style.top = '90%';
-    button.style.left = '50%';
-    button.style.transform = 'translate(-50%, -50%)';
-    button.onclick = nextPage;
-
-    page.append(button);
-});
-
-function nextPage() {
-    const index = this.getAttribute('index');
-    document.getElementById(`page${index}`).scrollIntoView({ 
-        behavior: 'smooth' 
-    });
-};
 
 (() => {
 
     gsap.registerPlugin(MotionPathPlugin);
+    gsap.registerPlugin(ScrollToPlugin);
 
     const vh = window.innerHeight;
     const vw = window.innerWidth;
 
-    const globalPageDuration = 2;
+    const globalPageDuration = 1.5;
     const offset = page => (page * (1 + globalPageDuration)) * vh // calcul de l'offset d'une page par rappor a la 'duree' (en pixels) de chaque scene
 
-    const apply = (p) => {
-        p.forEach((pageOptions, i) => { // chaque page est constituee d'un timeline
-            // toute les pages on un pin inclu, qui permet de rester devant la page le temps que toute les animations se jouent
-            const tl = gsap.timeline({
-                defaults: {
-                    duration: globalPageDuration
-                }
+    const scrollToPage = (i) => {
+        const target = document.getElementById(`page${i}`);
+        if(target){
+            gsap.to(window, {
+                duration: 0.5,
+                scrollTo: target
             });
+        }
+    } 
 
-            pageOptions.forEach(opt => { // pour chaque option de scene de cette page
-                Object.keys(opt) // on applique chaque option
-                    .forEach(option => {
-                        try {
-                            tl[option](...opt[option], '<');
-                        } catch (error) {
-                            console.log(`%c"tl[${option}]" n'existe pas`, 'color: red');
-                            console.log(error);
-                        }
-                    });
-            });
-
-            ScrollTrigger.create({
-                animation: tl,
-                trigger: `#page${i}`,
-                pin: true,
-                start: 'top top',
-                scrub: .5,
-                end: () => `+=${globalPageDuration * vh}`,
-                markers: true
-            });
-        });
-    };
-
-    var pages = [
+    var pagesAnnimations = [
         [
             /// PAGE 0 ///
             // le village en fond qui se dezoom
@@ -128,32 +79,71 @@ function nextPage() {
         ],
     ];
 
-    apply(pages);
+    const pages = document.querySelectorAll('.page');
 
-    const subs = document.querySelectorAll('.page');
+    pages.forEach((page, i) => {
+        // SUBTITLES
+        // filtre les pages qui ont ews sous-titre
+        const subtitles = [...page.childNodes].filter(el => el.className === 'subtitle'); 
 
-    subs.forEach( (p, i) => {
-        const subtitles = [...p.childNodes].filter(el => el.className === 'subtitle');
+        if(subtitles.length){
+            const subtitlesTl = gsap.timeline({
+                defaults: {
+                    duration: globalPageDuration
+                }
+            });
 
-        const tl = gsap.timeline({
+            subtitles.forEach((s, sIndex) => {
+                // appliquer les animation d'apparition et de disparition a chaque sous-titre
+                // const delay = sIndex === 0 ? `+=${globalPageDuration / 4}` : null; // ajouter un delay sur le premier
+                subtitlesTl.from(s, { opacity: 0, ease: Power4.easeOut });
+                subtitlesTl.to(s, { opacity: 0, ease: Power4.easeIn });
+            });
+
+            ScrollTrigger.create({
+                animation: subtitlesTl,
+                trigger: `#page${i}`,
+                start: 'top top',
+                scrub: .5,
+                end: () => `+=${(globalPageDuration * vh) * (subtitles.length ? subtitles.length : 1)}`
+            });
+            // SUBTITLES END
+        }
+
+        // ANIMATIONS
+        // chaque page est constituee d'un timeline
+        const animationTl = gsap.timeline({
             defaults: {
-                duration: globalPageDuration / subtitles.length
+                duration: globalPageDuration * (subtitles.length ? subtitles.length : 1)
             }
         });
 
-        subtitles.forEach((s, sIndex) => {
-            const delay = sIndex === 0 ? `+=${globalPageDuration / 4}` : null;
-            tl.from(s, { opacity: 0, ease: Power4.easeOut }, delay );
-            tl.to(s, { opacity: 0, ease: Power4.easeIn });
+        pagesAnnimations[i].forEach(opt => { // pour chaque option de scene de cette page
+            Object.keys(opt) // on applique chaque option
+            .forEach(option => {
+                try {
+                    animationTl[option](...opt[option], '<');
+                } catch (error) {
+                    console.log(`%c"animationTl[${option}]" n'existe pas`, 'color: red');
+                }
+            });
         });
 
         ScrollTrigger.create({
-            animation: tl,
+            animation: animationTl,
             trigger: `#page${i}`,
+            pin: true, // toute les pages ont un pin inclu, qui permet de rester devant la page le temps que toute les animations se jouent
             start: 'top top',
             scrub: .5,
-            end: () => `+=${globalPageDuration * vh}`,
+            end: () => `+=${(globalPageDuration * vh) * (subtitles.length ? subtitles.length : 1)}`,
+            // quand on arrive a la fin de l'annimation on passe a la page suivante
+            onLeave: () => scrollToPage(i + 1),
+            // quand on arrive au debut de l'annimation on revient a la page precedente
+            onLeaveBack: () => scrollToPage(i - 1),
+            // markers: true
         });
+        // ANIMATIONS END
+
     });
 
 })()
