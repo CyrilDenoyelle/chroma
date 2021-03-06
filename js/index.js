@@ -36,6 +36,7 @@
                 ]
             }
         ],
+        /// PAGE 1 ///
         [
             {
                 timeLineStr: '<',
@@ -160,8 +161,13 @@
         // chaque page est constituee d'un timeline
         const totalTimeLineDuration = globalPageDuration * (subtitles.length ? subtitles.length : 1)
         const animationTl = gsap.timeline({
-            duration: totalTimeLineDuration
+            duration: totalTimeLineDuration,
+            // defaults: {
+            //     duration: totalTimeLineDuration
+            // }
         });
+
+        const defaultDuration = totalTimeLineDuration;
 
         pagesAnnimations[i].forEach(({ timeLineStr, animations }) => { // pour chaque option de scene de cette page
 
@@ -173,7 +179,7 @@
             animations.forEach(({ f, options }) => {
                 options[1] = {
                     ...options[1],
-                    ...duration && { duration }
+                    ...(duration && { duration }) || { duration: defaultDuration }
                 }
 
                 try {
