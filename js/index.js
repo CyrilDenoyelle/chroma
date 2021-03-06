@@ -159,7 +159,9 @@
         // ANIMATIONS
         // chaque page est constituee d'un timeline
         const totalTimeLineDuration = globalPageDuration * (subtitles.length ? subtitles.length : 1)
-        const animationTl = gsap.timeline();
+        const animationTl = gsap.timeline({
+            duration: totalTimeLineDuration
+        });
 
         pagesAnnimations[i].forEach(({ timeLineStr, animations }) => { // pour chaque option de scene de cette page
 
