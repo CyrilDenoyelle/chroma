@@ -159,27 +159,20 @@
 
         // ANIMATIONS
         // chaque page est constituee d'un timeline
-        const totalTimeLineDuration = globalPageDuration * (subtitles.length ? subtitles.length : 1)
-        const animationTl = gsap.timeline({
-            duration: totalTimeLineDuration,
-            // defaults: {
-            //     duration: totalTimeLineDuration
-            // }
-        });
-
-        const defaultDuration = totalTimeLineDuration;
+        const totalTimelineDuration = globalPageDuration * (subtitles.length ? subtitles.length : 1)
+        const animationTl = gsap.timeline({ duration: totalTimelineDuration });
 
         pagesAnnimations[i].forEach(({ timeLineStr, animations }) => { // pour chaque option de scene de cette page
 
             const [delay, duration] = timeLineStr === '<' || timeLineStr === '>'
             ? [timeLineStr]
             : timeLineStr.split(/s|e/g)
-                .map(proportion => totalTimeLineDuration * (proportion.length / (timeLineStr.length - 2)));
+                .map(proportion => totalTimelineDuration * (proportion.length / (timeLineStr.length - 2)));
 
             animations.forEach(({ f, options }) => {
                 options[1] = {
                     ...options[1],
-                    ...(duration && { duration }) || { duration: defaultDuration }
+                    duration: duration || totalTimelineDuration
                 }
 
                 try {
