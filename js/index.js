@@ -170,8 +170,8 @@
                 .map(proportion => totalTimelineDuration * (proportion.length / (timeLineStr.length - 2)));
 
             animations.forEach(({ f, options }) => {
-                options[1] = {
-                    ...options[1],
+                options[options.length - 1] = {
+                    ...options[options.length - 1],
                     duration: duration || totalTimelineDuration
                 }
 
