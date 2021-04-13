@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,50 +12,86 @@
     <!-- Title -->
     <link href="https://fonts.googleapis.com/css2?family=Ballet&display=swap" rel="stylesheet">
     <!-- Subtitles -->
-    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:wght@200;400&display=swap" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:wght@200;400&display=swap" rel="stylesheet">
 </head>
-<body>
-    <div class="page" id="page0">
-        <img src="./img/paysage.png" class="background" id="background">
-        <img src="./img/paysage_premier-plan.png" id="parallax1" style="position: absolute; top: 0; width: 100vw;">
-        <h1 id="title" style="position: absolute; top: 0; left: 50%; transform: translate(-50%, -50%); font-family: 'Ballet', cursive; font-weight: bold; text-shadow: 4px 4px 20px rgba(0,0,0,0.48); color: white;">Chroma</h1>
-    </div>
-    <div class="page" id="page1">
-        <img src="./img/test-3plan.png" id="test-plan3" style="position: absolute; top: 0; width: 110vw;">
-        <img src="./img/test-2plan.png" id="test-plan2" style="position: absolute; top: 0; width: 100vw;">
-        <img src="./img/test-1plan.png" id="test-plan1" style="position: absolute; top: 0; width: 100vw;">
-        <p class='subtitle' >Deux madame se parle tandis que la montagne bouge. lor</p>
-        <p class='subtitle' >Quis minus, obcaecati qui voluptatum corporis expedita rem</p>
-    </div>
-    <div class="page" id="page2" style="display: flex; justify-content: space-around; align-items: center">
-        <div class="subPage" style="width: 25vw; height: 80vh;">
-            <img src="./img/moulin-background.png" id="moulin-background1" style="position: absolute; top: -20; left: 0; height: 100%;">
-            <img src="./img/moulin-2plan.png" id="moulin-2plan1" style="position: absolute; top: 0; left: 0; height: 100%;">
-            <img src="./img/moulin-1plan.png" id="moulin-1plan1" style="position: absolute; top: 0; left: 0; height: 100%;">
+
+<body style="overflow-x: hidden;">
+    <div class="screen" , id="screen0">
+        <div class="page" id="page0">
+            <!-- <div class="image"></div> -->
+            <img src="./img/paysage.png" id="background"
+                style="position: absolute; top: 0; left: 0; height: 100%; width: 100%;">
+            <img src="./img/paysage_premier-plan.png" id="parallax"
+                style="position: absolute; top: 0; left: 0; height: 100%; width: 100%;">
         </div>
-        <div class="subPage" style="width: 25vw; height: 80vh;">
-            <img src="./img/moulin-background.png" id="moulin-background2" style="position: absolute; top: -20; left: 0; height: 100%;">
-            <img src="./img/moulin-2plan.png" id="moulin-2plan2" style="position: absolute; top: 0; left: 0; height: 100%;">
-            <img src="./img/moulin-1plan.png" id="moulin-1plan2" style="position: absolute; top: 0; left: 0; height: 100%;">
-        </div>
-        <div class="subPage" style="width: 25vw; height: 80vh;">
-            <img src="./img/moulin-background.png" id="moulin-background3" style="position: absolute; top: -20; left: 0; height: 100%;">
-            <img src="./img/moulin-2plan.png" id="moulin-2plan3" style="position: absolute; top: 0; left: 0; height: 100%;">
-            <img src="./img/moulin-1plan.png" id="moulin-1plan3" style="position: absolute; top: 0; left: 0; height: 100%;">
-        </div>
-        <p class='subtitle' >Deux madame se parle tandis que la montagne bouge. lor</p>
-        <p class='subtitle' >Quis minus, obcaecati qui voluptatum corporis expedita rem</p>
-        <p class='subtitle' >Deux madame se parle tandis que la montagne bouge.</p>
+        <h1 id="title"
+            style="position: absolute; top: 0; left: 50%; transform: translate(-50%, -50%); font-family: 'Ballet', cursive; font-weight: bold; text-shadow: 4px 4px 20px rgba(0,0,0,0.48); color: white;">
+            Chroma
+        </h1>
     </div>
-    <div class="page" id="page3">
-        <img src="./img/paysage.png" class="background" id="background2">
-        <img src="./img/papillon.gif" id="test-papillon" style="position: absolute; top: 40%; height: 200px;">
-        <img src="./img/paysage_premier-plan.png" id="parallax2" style="position: absolute; top: 0; width: 100vw;">
+    <div class="screen" , id="screen1">
+        <div class="page" id="page1">
+            <img src="./img/test-3plan.png" id="test-plan3"
+                style="position: absolute; top: 0; left: 0; height: 100%; width: 100%;">
+            <img src="./img/test-2plan.png" id="test-plan2"
+                style="position: absolute; top: 0; left: 0; height: 100%; width: 100%;">
+            <img src="./img/test-1plan.png" id="test-plan1"
+                style="position: absolute; top: 0; left: 0; height: 100%; width: 100%;">
+        </div>
+        <p class='subtitle'>Deux madame se parle tandis que la montagne bouge. lor</p>
+        <p class='subtitle'>Quis minus, obcaecati qui voluptatum corporis expedita rem</p>
     </div>
-    <div class="page" id="page4">
-        <img src="./img/nuage-background.png" class="background" id="background2">
-        <img src="./img/nuage-2plan.png" id="nuage-2plan" style="position: absolute; top: 0; height: 100%;">
-        <img src="./img/nuage-1plan.png" id="nuage-1plan" style="position: absolute; top: 0; height: 100%;">
+    <div class="screen" , id="screen2">
+        <div class="page" id="page2" style="display: flex; justify-content: space-around; align-items: center">
+            <div class="subPage" style="width: 33vw; height: 80vh;">
+                <img src="./img/moulin-background.png" id="moulin-background1"
+                    style="position: absolute; top: -20; left: 0; height: 100%;">
+                <img src="./img/moulin-2plan.png" id="moulin-2plan1"
+                    style="position: absolute; top: 0; left: 0; height: 100%;">
+                <img src="./img/moulin-1plan.png" id="moulin-1plan1"
+                    style="position: absolute; top: 0; left: 0; height: 100%;">
+            </div>
+            <div class="subPage" style="width: 33vw; height: 80vh;">
+                <img src="./img/moulin-background.png" id="moulin-background2"
+                    style="position: absolute; top: -20; left: 0; height: 100%;">
+                <img src="./img/moulin-2plan.png" id="moulin-2plan2"
+                    style="position: absolute; top: 0; left: 0; height: 100%;">
+                <img src="./img/moulin-1plan.png" id="moulin-1plan2"
+                    style="position: absolute; top: 0; left: 0; height: 100%;">
+            </div>
+            <div class="subPage" style="width: 33vw; height: 80vh;">
+                <img src="./img/moulin-background.png" id="moulin-background3"
+                    style="position: absolute; top: -20; left: 0; height: 100%;">
+                <img src="./img/moulin-2plan.png" id="moulin-2plan3"
+                    style="position: absolute; top: 0; left: 0; height: 100%;">
+                <img src="./img/moulin-1plan.png" id="moulin-1plan3"
+                    style="position: absolute; top: 0; left: 0; height: 100%;">
+            </div>
+        </div>
+        <p class='subtitle'>Deux madame se parle tandis que la montagne bouge. lor</p>
+        <p class='subtitle'>Quis minus, obcaecati qui voluptatum corporis expedita rem</p>
+        <p class='subtitle'>Deux madame se parle tandis que la montagne bouge.</p>
+    </div>
+    <div class="screen" , id="screen3">
+        <div class="page" id="page3">
+            <img src="./img/paysage.png" id="background2"
+                style="position: absolute; top: 0; left: 0; height: 100%; width: 100%;">
+            <img src="./img/papillon.gif" id="test-papillon" style="position: absolute; top: 40%; height: 200px;">
+            <img src="./img/paysageGauche_premier-plan.png" id="parallaxGauche2"
+                style="position: absolute; top: 0; left: 0; height: 100%; width: 100%;">
+            <img src="./img/paysageDroite_premier-plan.png" id="parallaxDroite2"
+                style="position: absolute; top: 0; left: 0; height: 100%; width: 100%;">
+        </div>
+    </div>
+    <div class="screen" , id="screen4">
+        <div class="page" id="page4">
+            <img src="./img/nuage-background.png" id="background3"
+                style="position: absolute; top: 0; left: 0; height: 100%; width: 100%;">
+            <img src="./img/nuage-2plan.png" id="nuage-2plan"
+                style="position: absolute; top: 0; left: 0; height: 100%; width: 100%;">
+            <img src="./img/nuage-1plan.png" id="nuage-1plan"
+                style="position: absolute; top: 0; left: 0; height: 100%; width: 100%;">
+        </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.6.0/gsap.min.js"></script>
@@ -63,4 +100,5 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.6.0/MotionPathPlugin.min.js"></script>
     <script src="./js/index.js"></script>
 </body>
+
 </html>

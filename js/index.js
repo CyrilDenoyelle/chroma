@@ -1,5 +1,4 @@
 
-
 (() => {
 
     gsap.registerPlugin(MotionPathPlugin);
@@ -7,19 +6,13 @@
 
     const vh = window.innerHeight;
     const vw = window.innerWidth;
+    const deductedPageWidth = vh * (16 / 9);
+    const deductedPageHeight = vw * (9 / 16);
+    const aspectRatio = vh / vw;
+    const deductedWidthMissingProportion = deductedPageWidth - vw;
+    const deductedHeightMissingProportion = deductedPageHeight - vh;
 
     const globalPageDuration = 1.5;
-    const offset = page => (page * (1 + globalPageDuration)) * vh // calcul de l'offset d'une page par rappor a la 'duree' (en pixels) de chaque scene
-
-    const scrollToPage = (i) => {
-        const target = document.getElementById(`page${i}`);
-        if(target){
-            gsap.to(window, {
-                duration: 0.5,
-                scrollTo: target
-            });
-        }
-    } 
 
     var pagesAnnimations = [
         [
@@ -28,7 +21,7 @@
                 timeLineStr: '<',
                 animations: [
                     // le village en fond qui se dezoom
-                    { f: 'to', options: ['#parallax1', { scale: 1.45, ease: Power2.easeInOut }] },
+                    { f: 'to', options: ['#parallax', { scale: 1.45, ease: Power2.easeInOut }] },
                     // contour qui s'ouvre pour laisser voir le village
                     { f: 'fromTo', options: ['#background', { scale: 1.05, ease: Power2.easeInOut }, { scale: 1 }] },
                     // Le titre arrive d'en haut en fadeIn et en grossissant
@@ -92,23 +85,26 @@
                 timeLineStr: '<',
                 animations: [
                     // le village en fond qui se dezoom
-                    { f: 'to', options: ['#parallax2', { scale: 1.45, ease: Power2.easeInOut }] },
+                    { f: 'to', options: ['#parallaxDroite2', { scale: 1.45, ease: Power2.easeInOut }] },
+                    { f: 'to', options: ['#parallaxGauche2', { scale: 1.45, ease: Power2.easeInOut }] },
                     // contour qui s'ouvre pour laisser voir le village
-                    { f: 'fromTo', options: ['#background2', { scale: 1.05, ease: Power2.easeInOut }, { scale: 1 }] },
+                    { f: 'fromTo', options: ['#background3', { scale: 1.05, ease: Power2.easeInOut }, { scale: 1 }] },
                     // le papillon suis un path en csv
-                    { f: 'to', options: [
-                        "#test-papillon", 
-                        {
-                            scale: 0,
-                            motionPath: {
-                                alignOrigin: [0.5, 0.5],
-                                curviness: 1,
-                                autoRotate: false,
-                                align: "self",
-                                path: "M-6.74,164.645 C0.258,145.639 59.224,76.583 132.227,75.589 207.239,75.589 228.086,128.706 254.086,156.716 287.084,190.71 320.015,202.904 369.015,202.904 456.015,202.904 490.244,154.113 497.244,131.118 "
+                    {
+                        f: 'to', options: [
+                            "#test-papillon",
+                            {
+                                scale: 0,
+                                motionPath: {
+                                    alignOrigin: [0.5, 0.5],
+                                    curviness: 1,
+                                    autoRotate: false,
+                                    align: "self",
+                                    path: "M-6.74,164.645 C0.258,145.639 59.224,76.583 132.227,75.589 207.239,75.589 228.086,128.706 254.086,156.716 287.084,190.71 320.015,202.904 369.015,202.904 456.015,202.904 490.244,154.113 497.244,131.118 "
+                                }
                             }
-                        }
-                    ]},
+                        ]
+                    },
                 ]
             }
         ],
@@ -126,14 +122,27 @@
         ],
     ];
 
-    const pages = document.querySelectorAll('.page');
+    const screens = document.querySelectorAll('.screen');
 
-    pages.forEach((page, i) => {
+    screens.forEach((screen, i) => {
+
+        // CSS apply
+        const page = document.getElementById(`page${i}`);
+        const pageStyle = page.getAttribute('style')
+        const rationStyle = aspectRatio - 9 / 16 > 0
+            ? `width: ${vw + deductedWidthMissingProportion}px`
+            : `height: ${vh + deductedHeightMissingProportion}px`
+
+        page.setAttribute(
+            'style',
+            `${pageStyle ? pageStyle + ';' : ''}${rationStyle}`
+        );
+
         // SUBTITLES
-        // filtre les pages qui ont ews sous-titre
-        const subtitles = [...page.childNodes].filter(el => el.className === 'subtitle'); 
+        // filtre les screens qui ont des sous-titre
+        const subtitles = [...screen.childNodes].filter(el => el.className === 'subtitle');
 
-        if(subtitles.length){
+        if (subtitles.length) {
             const subtitlesTl = gsap.timeline({
                 defaults: {
                     duration: globalPageDuration
@@ -158,16 +167,23 @@
         }
 
         // ANIMATIONS
-        // chaque page est constituee d'un timeline
+        // chaque screen est constituee d'un timeline
         const totalTimelineDuration = globalPageDuration * (subtitles.length ? subtitles.length : 1)
         const animationTl = gsap.timeline({ duration: totalTimelineDuration });
 
-        pagesAnnimations[i].forEach(({ timeLineStr, animations }) => { // pour chaque option de scene de cette page
+        const opt = aspectRatio - 9 / 16 > 0
+            ? { x: -deductedWidthMissingProportion }
+            : { y: -deductedHeightMissingProportion }
+        opt.duration = totalTimelineDuration;
+        opt.ease = Power2.easeInOut;
+        animationTl.to(`#page${i}`, opt, '<')
+
+        pagesAnnimations[i].forEach(({ timeLineStr, animations }) => { // pour chaque option de scene de cette screen
 
             const [delay, duration] = timeLineStr === '<' || timeLineStr === '>'
-            ? [timeLineStr]
-            : timeLineStr.split(/s|e/g)
-                .map(proportion => totalTimelineDuration * (proportion.length / (timeLineStr.length - 2)));
+                ? [timeLineStr]
+                : timeLineStr.split(/s|e/g)
+                    .map(proportion => totalTimelineDuration * (proportion.length / (timeLineStr.length - 2)));
 
             animations.forEach(({ f, options }) => {
                 options[options.length - 1] = {
@@ -185,15 +201,15 @@
 
         ScrollTrigger.create({
             animation: animationTl,
-            trigger: `#page${i}`,
-            pin: true, // toute les pages ont un pin inclu, qui permet de rester devant la page le temps que toute les animations se jouent
+            trigger: `#screen${i}`,
+            pin: true, // toute les screens ont un pin inclu, qui permet de rester devant la screen le temps que toute les animations se jouent
             start: 'top top',
             scrub: .5,
             end: () => `+=${(globalPageDuration * vh) * (subtitles.length ? subtitles.length : 1)}`,
-            // quand on arrive a la fin de l'annimation on passe a la page suivante
-            onLeave: () => scrollToPage(i + 1),
-            // quand on arrive au debut de l'annimation on revient a la page precedente
-            onLeaveBack: () => scrollToPage(i - 1),
+            // quand on arrive a la fin de l'annimation on passe a la screen suivante
+            // onLeave: () => scrollToPage(i + 1),
+            // quand on arrive au debut de l'annimation on revient a la screen precedente
+            // onLeaveBack: () => scrollToPage(i - 1),
             // markers: true
         });
         // ANIMATIONS END
